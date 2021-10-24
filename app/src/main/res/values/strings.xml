@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Red Social DW2021</string>
+    <string name="title_item_detail">Detalles Perfil</string>
+    <string name="cancel">Cancelar</string>
+    <string name="signin">Logearse</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Correo</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Ingresar DW2021</string>
+    <string name="action_sign_in_short">Ingresar</string>
+    <string name="welcome">"Bienvenido!"</string>
+    <string name="invalid_username">Usuario no valido</string>
+    <string name="invalid_password">Contrasena menor a 5 caracteres</string>
+    <string name="login_failed">"Ingreso fallido"</string>
+</resources>
