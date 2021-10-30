@@ -47,6 +47,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ItemListFragment extends Fragment {
 
     public static final String EXTRA_MESSAGE = "USER_EMAIL_ON_MESSAGE";
+    private static final String SEXO_F = "f";
+    private static final String SEXO_M = "m";
+    private static final String SEXO_FEMENINO = "Femenino";
+    private static final String SEXO_MASCULINO = "Masculino";
+    private static final String SEXO_INDEFINIDO = "No proporciona";
+    private static final String SEXO_I = "i";
 
     /**
      * Method to intercept global key events in the
@@ -99,27 +105,53 @@ public class ItemListFragment extends Fragment {
             {
                 if (response.isSuccessful())
                 {
-                    ArrayList pokemonList = response.body().getResults();
+                    ArrayList userList = response.body().getResults();
 
                     UserContent.ITEM_MAP.clear();
                     UserContent.ITEMS.clear();
 
-                    if(pokemonList.size() == 1)
+                    if(userList.size() == 1)
                     {
-                        Object getrow = pokemonList.get(0);
+                        Object getrow = userList.get(0);
                         LinkedTreeMap<Object,Object> t = (LinkedTreeMap) getrow;
                         //String name = t.get("name").toString();
-                        String username = t.get("username").toString();
-                        String user_email = t.get("user_email").toString();
+                        String nombre = t.get("nombre").toString();
+                        String apellido = t.get("apellido").toString();
+                        String email = t.get("email").toString();
 
-                        UserContent.startOneItem( 1, username,
-                                username + System.getProperty("line.separator")
-                                        + user_email );
+                        String nickname = "N/A";
+
+                        if(t.get("nickname") != null)
+                        {
+                            nickname = t.get("nickname").toString();
+                        }
+
+                        String sexo = t.get("sexo").toString();
+
+                        if(sexo.equalsIgnoreCase(SEXO_F))
+                        {
+                            sexo = SEXO_FEMENINO;
+                        }
+                        else if(sexo.equalsIgnoreCase(SEXO_M))
+                        {
+                            sexo = SEXO_MASCULINO;
+                        }
+                        else if(sexo.equalsIgnoreCase(SEXO_I))
+                        {
+                            sexo = SEXO_INDEFINIDO;
+                        }
+
+                        UserContent.startOneItem( 1, nombre + " " + apellido,
+                                "Nombre :: " + nombre + System.getProperty("line.separator")
+                                        + "Apellido :: " + apellido + System.getProperty("line.separator")
+                                        + "E-Correo :: " + email + System.getProperty("line.separator")
+                                        + "Apodo :: " + nickname + System.getProperty("line.separator")
+                                        + "Genero :: " + sexo + System.getProperty("line.separator"));
                     }
-                    else if(pokemonList.size() == 0)
+                    else if(userList.size() == 0)
                     {
                         //the rest api call returns an array different from size 1
-                        UserContent.startOneItem( 1, "Username No Encontrado",
+                        UserContent.startOneItem( 1, "Usuario No Encontrado",
                                 "El correo proporcionado no existe!" + System.getProperty("line.separator")
                                         + "Ingrese un correo existente para consultar." );
                     }
